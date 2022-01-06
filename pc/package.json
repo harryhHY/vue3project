@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve",
+    "start": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "element-plus": "^1.2.0-beta.1",
+    "lodash": "^4.17.21",
+    "pinia": "^2.0.0-rc.10",
     "vue": "^3.2.20",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-router": "^4.0.12",

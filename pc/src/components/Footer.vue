@@ -1,14 +1,14 @@
 <template lang="">
     <div class='footerdiv'>
-        <div>
-            ©来自harry
+        <div style="font-family: Vladimir Script;">
+            © <span style="font-family: '华文行楷';" >来自</span> harry
         </div>
         <div>
-            <div>
+            <div style="font-family: '华文行楷';" >
                 请关注我的博客
             </div>
-            <span>Blog：</span>
-            <a :href="url" target="_blank" >{{url}}</a>
+            <span style="font-family: Vladimir Script;" >Blog：</span>
+            <a :href="url" target="_blank" style="font-family: Vladimir Script;">{{url}}</a>
         </div>
     </div>
 </template>
@@ -38,7 +38,7 @@ export default {
   align-items: center;
   justify-content: space-evenly;
   color:#0093e9;
-  font-size: 16px;
+  font-size: 20px;
   background-color: #85ffbd;
   background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
   a{

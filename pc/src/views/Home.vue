@@ -1,52 +1,57 @@
 <template>
   <div class="home">
-    <Header></Header>
-    <div>
-      <el-input v-model="inputmsg" placeholder="请输入您要的文本" />
-      <el-button type="primary"  @click="confirmMsg()">确定修改</el-button>
+    <div class="table_form">
+      <el-input v-model="inputmsg" placeholder="请输入您要的文本"  size="mini" />
+      <el-button type="primary" @click="confirmMsgfn()" size="mini">确定修改</el-button>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+// import { Vue } from "vue-class-component";
+import _ from 'lodash';
 import {
-  defineAsyncComponent,
   onMounted,
   onRenderTriggered,
-  reactive,
   ref,
 } from "vue"; //
-const Header = defineAsyncComponent(() => import("@/components/Header.vue")); //组件懒加载
-const Footer = defineAsyncComponent(() => import("@/components/Footer.vue")); //组件懒加载
+
+
 
 export default {
   setup() {
-    const inputmsg = ref("");//绑定的input值
+    const inputmsg = ref(""); //绑定的input值
     const confirmMsg = () => {//button确定点击的值
       console.log(inputmsg.value);
     };
+    const _debounce = _.debounce(confirmMsg, 5000);//引入lodash功能
+    const confirmMsgfn = () => {//使用lodash
+      _debounce()
+    }
     onMounted(() => {
-      console.log("getdata");
+      console.log(_)
     });
-    onRenderTriggered((event) => {//查看修改的值
+    onRenderTriggered((event) => {
+      //查看修改的值
       console.log(event);
     });
-
     return {
       inputmsg,
-      confirmMsg,
+      confirmMsgfn,
     };
   },
-  components: {
-    Header,
-    Footer,
-  },
+  components: {},
 };
 </script>
 <style>
 .home {
   height: 100%;
+  overflow: hidden;
+}
+.table_form{
+  width: 230px;
+  display: flex;
+  align-items: center;
+  margin:20px auto 0;
 }
 </style>

@@ -16,7 +16,23 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '个人中心'
     }
-  }
+  },
+  {
+    path: '/cookie',
+    name: 'Cookie',
+    component: () => import( '../views/cookie/cookie.vue'),
+    meta: {
+      title: '厨艺爱好'
+    }
+  },
+  {
+    path: '/cookiedetail',
+    name: 'Cookiedetail',
+    component: () => import( '../views/cookie/detail.vue'),
+    meta: {
+      title: '详细做法'
+    }
+  },
 ]
 
 const router = createRouter({

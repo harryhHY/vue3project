@@ -5,6 +5,10 @@ import store from './store'
 //引入element
 import { globalRegister } from './global' //导入
 
+//引入pinia
+import { createPinia } from 'pinia';
+// App.use(createPinia());
 
 
-createApp(App).use(store).use(router).use(globalRegister).mount('#app')
+
+createApp(App).use(store).use(router).use(createPinia()).use(globalRegister).mount('#app')

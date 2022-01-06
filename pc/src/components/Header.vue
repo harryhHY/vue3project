@@ -10,20 +10,26 @@
     </div>
 </template>
 <script lang= 'ts'>
-import { reactive, toRefs, watch } from "vue";
-import { useRouter, onBeforeRouteUpdate } from "vue-router";
+import { reactive, toRefs, watchEffect } from "vue";
+import { useRouter } from "vue-router";
 interface dataListReg {
   //头部接口规定
   HeaderList: any[];
   personSelected: number;
-  changePerson: (item: { id: number; name: string; path: string }) => void;
+  changePerson: (item: {
+    id: number;
+    name: string;
+    path: string;
+    age: number;
+    sex: string;
+  }) => void;
 }
 export default {
   setup() {
     const router = useRouter();
     const dataList: dataListReg = reactive({
+      //头部的数据
       HeaderList: [
-        //头部的数据
         {
           id: 1,
           name: "首页",
@@ -33,35 +39,45 @@ export default {
           id: 2,
           name: "个人中心",
           path: "/user",
+          age: 25,
+          sex: "man",
+        },
+        {
+          id: 3,
+          name: "厨艺爱好",
+          path: "/cookie"
         },
       ],
       personSelected: 1, //当前选中的页面
-
-      changePerson: (item: { id: number; name: string; path: string }) => {
-        //切换当前选中的页面
+      //切换当前选中的页面
+      /**
+       * params
+       */
+      changePerson: (item: {
+        id: number;
+        name: string;
+        path: string;
+        age: number;
+        sex: string;
+      }) => {
         dataList.personSelected = item.id; //切换头部高亮
+        //跳转路由
         router.push({
-          //跳转路由
           path: item.path,
+          query: {
+            data: item.age,
+            sex: item.sex,
+          },
         });
       },
     });
-    const getRouter = reactive({
-      getRouterChangePersonSelected: () => {
-        //切换header高亮
-        switch (
-          router.currentRoute.value.path //当前路由地址
-        ) {
-          case "/":
-            dataList.personSelected = 1;
-            break;
-          case "/user":
-            dataList.personSelected = 2;
-            break;
+    watchEffect(() => {
+      router.getRoutes().map((item, index) => {
+        if (item.path === router.currentRoute.value.path) {
+          dataList.personSelected = index * 1 + 1
         }
-      },
-    });
-    getRouter.getRouterChangePersonSelected();
+      })
+    })
     const DataListRef = toRefs(dataList);
     return {
       ...DataListRef,
@@ -76,6 +92,7 @@ export default {
   width: 80%;
   height: 50px;
   line-height: 50px;
+  font-size: 18px;
   background-color: #0093e9;
   background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
   padding: 0 10%;

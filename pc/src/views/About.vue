@@ -1,20 +1,28 @@
 <template>
   <div class="about">
-    <Header></Header>
-    <h1>This is an about page</h1>
-    <Footer></Footer>
+    <div>我的年龄：{{ age }}</div>
+    <div>我的性别 ：{{ sex }}</div>
   </div>
 </template>
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import {defineAsyncComponent} from 'vue'
-const Header = defineAsyncComponent(() => import('@/components/Header.vue'))
-const Footer = defineAsyncComponent(() => import("@/components/Footer.vue")); //组件懒加载
-@Options({
-  components: {
-    Header,
-    Footer
+import { ref, reactive, toRefs } from "vue";
+import { LocationQueryValue, useRoute } from "vue-router";
+interface userreg {
+  age: LocationQueryValue | LocationQueryValue[];
+  sex: LocationQueryValue | LocationQueryValue[];
+}
+export default {
+  setup() {
+    const route = useRoute();
+    let { age, sex } = route.query;
+    const useritem: userreg = reactive({
+      age: age,
+      sex: sex,
+    });
+    const useritemRef = toRefs(useritem);
+    return {
+      ...useritemRef,
+    };
   },
-})
-export default class About extends Vue {}
+};
 </script>
